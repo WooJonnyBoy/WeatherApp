@@ -1,23 +1,39 @@
 import styles from "./CityList.module.css";
 import data from "../../state/dataState";
 import { observer } from "mobx-react-lite";
+// import { useState } from "react";
 
 interface Imodal {
     openModal: () => void;
 }
 
 const CityList: React.FC<Imodal> = observer(({ openModal }) => {
+    // const [myTripList, setMyTripList] = useState(data.tripsList);
+    const myTripList = data.tripsList
+
     return (
         <>
-            <input
-                className={styles.searchInput}
-                type="text"
-                placeholder="Search your trip"
-            />
+            <div className={styles.searchBlock}>
+                <span className={styles.searchIcon}></span>
+                <input
+                    className={styles.searchInput}
+                    type="text"
+                    placeholder="Search your trip"
+                />
+                <div className={styles.search}>
+                    <span>Sort: </span>
+                    <select name="search">
+                        <option>choose the option</option>
+                        <option value="name">by name</option>
+                        <option value="start">by start date</option>
+                        <option value="end">by end date</option>
+                    </select>
+                </div>
+            </div>
             <div className={styles.cityList}>
                 <div className={styles.innerCityList}>
-                    {!!data.tripsList.length &&
-                        data.tripsList.map((i: any, index: number) => {
+                    {!!myTripList.length &&
+                        myTripList.map((i: any, index: number) => {
                             return (
                                 <div
                                     className={
@@ -30,7 +46,9 @@ const CityList: React.FC<Imodal> = observer(({ openModal }) => {
                                         data.setSelectIndex(index);
                                     }}
                                 >
-                                    <div className={styles.cityImage}></div>
+                                    <div className={styles.cityImage}>
+                                        <img src={i.image} alt="" />
+                                    </div>
                                     <div className={styles.tripDescription}>
                                         <div>{i.resolvedAddress}</div>
                                         <div className={styles.fromTo}>
@@ -46,7 +64,7 @@ const CityList: React.FC<Imodal> = observer(({ openModal }) => {
                                         </div>
                                     </div>
                                     {index === data.selected &&
-                                        data.tripsList.length > 1 && (
+                                        myTripList.length > 1 && (
                                             <div
                                                 onClick={(e) => {
                                                     e.stopPropagation();
@@ -72,6 +90,24 @@ const CityList: React.FC<Imodal> = observer(({ openModal }) => {
                     <p>+</p>
                     <p>Add trip</p>
                 </div>
+            </div>
+            <div className={styles.buttons}>
+                <button
+                    name="prev"
+                    disabled={!data.selected}
+                    onClick={(e: any) => {
+                        data.changeSelectIndex(e.target.name);
+                    }}
+                >
+                    {"<< previous"}
+                </button>
+                <button
+                    name="next"
+                    disabled={data.selected === data.tripsList.length - 1}
+                    onClick={(e: any) => data.changeSelectIndex(e.target.name)}
+                >
+                    {"next >>"}
+                </button>
             </div>
         </>
     );

@@ -1,23 +1,31 @@
-
 .searchInput {
     width: 40%;
+    min-width: 200px;
     border: none;
     outline: none;
     border-radius: 5px;
-    padding: 10px;
+    padding: 10px 0 10px 2rem;
     background-color: #e6f7ff;
     font-size: 1.2rem;
 }
 
+.searchIcon {
+    position: absolute;
+    width: 1.5rem;
+    height: 1.5rem;
+    left: 5px;
+    background: url(../../assets/search.png) no-repeat ;
+    background-size: cover;
+}
+
 .cityList {
     display: flex;
-    gap: 2rem;
 }
 
 .innerCityList {
     display: flex;
     gap: 2rem;
-    padding: 5px;
+    padding: 10px 1rem 10px 0;
     max-width: 100%;
     overflow-y: auto;
 }
@@ -30,7 +38,7 @@
     min-width: var(--width-size);
     height: var(--width-size);
     background-color: #e6f7ff;
-    margin: 5px;
+    margin: 10px 0 0 1rem;
 }
 
 .tripCity {
@@ -58,8 +66,13 @@
 
 .cityImage {
     width: 100%;
+    max-width: var(--width-size);
     min-height: var(--width-size);
     background-color: yellow;
+    & img {
+        width: 100%;
+        height: 100%;
+    }
 }
 
 .selected {
@@ -68,15 +81,47 @@
     flex-direction: column;
     min-width: var(--width-size);
     border-radius: 3px;
-    box-shadow: 0 0 5px 2px rgba(35, 10, 179, 0.1);
+    box-shadow: 0 0 5px 3px rgba(35, 10, 179, 0.1);
     & .cross {
         position: absolute;
-        top: -10px;
-        right: -5px;
-        padding: 5px;
+        top: 0px;
+        right: 5px;
+        font-size: 1.2rem;
         color: red;
-        background-color: white;
         border-radius: 50%;
         cursor: pointer;
+        &:hover {
+            transform: scale(1.1, 1.1);
+        }
     }
 }
+
+.buttons {
+    display: flex;
+    gap: 1rem;
+    & button {
+        padding: 5px 10px;
+        border: none;
+        border-radius: 3px;
+        background-color: #e6f7ff;
+    }
+}
+
+.searchBlock {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.search {
+    font-size: 1.2rem;
+    & select {
+        font-size: 1.2rem;
+        outline: none;
+        padding: 0 5px 0 0;
+        color: #9c9c9c;
+        border: none;
+    }
+}
+

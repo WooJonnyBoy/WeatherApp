@@ -5,12 +5,15 @@ import { observer } from "mobx-react-lite";
 const WeatherList: React.FC = observer(() => {
 
     const weatherIcons: any = {
-        "partly-cloudy-day": "🌤",
-        "partly-cloudy-night": "🌤",
-        rain: "🌧",
-        cloudy: "☁",
-        snow: "❄",
-        "clear-day": "☀",
+        "partly-cloudy-day": "🌤️",
+        "partly-cloudy-night": "🌤️",
+        fog: '🌤️',
+        wind: '🌤️',
+        rain: "🌧️",
+        cloudy: "☁️",
+        snow: "❄️",
+        "clear-day": "☀️",
+        'clear-night' : '☀️'
     };
 
     const weekDays: any = {
@@ -28,9 +31,9 @@ const WeatherList: React.FC = observer(() => {
             {data.tripsList[data.selected]?.days?.map((i: any) => {
                     return (
                         <div key={i.datetime}>
-                            {/* <div>
+                            <div>
                                 {i.datetime.split("-").reverse().join(".")}
-                            </div> */}
+                            </div>
                             <div>{weekDays[new Date(i.datetime).getDay()]}</div>
                             <div className={styles.weatherIcon}>
                                 {weatherIcons[i.icon]}

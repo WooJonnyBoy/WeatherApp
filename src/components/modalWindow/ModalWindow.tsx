@@ -8,8 +8,8 @@ interface Ifc {
 
 const ModalWindow: React.FC<Ifc> = ({ closeModal }) => {
     const [location, setLocation] = useState<string>("");
-    const [date_1, setDate_1] = useState<string>("");
-    const [date_2, setDate_2] = useState<string>("");
+    const [date_1, setDate_1] = useState<string  | null>(null);
+    const [date_2, setDate_2] = useState<string | null>(null);
 
     const addTrip = () => {
         if (!location.length) return;
@@ -39,7 +39,7 @@ const ModalWindow: React.FC<Ifc> = ({ closeModal }) => {
                 </label>
                 <label htmlFor="endDate">
                     <p>
-                        <span>*</span> End date
+                        <span>*</span> Start date
                     </p>
                     <input
                         className={styles.input}
