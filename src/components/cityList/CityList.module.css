@@ -1,0 +1,82 @@
+
+.searchInput {
+    width: 40%;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #e6f7ff;
+    font-size: 1.2rem;
+}
+
+.cityList {
+    display: flex;
+    gap: 2rem;
+}
+
+.innerCityList {
+    display: flex;
+    gap: 2rem;
+    padding: 5px;
+    max-width: 100%;
+    overflow-y: auto;
+}
+
+.addSity {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-width: var(--width-size);
+    height: var(--width-size);
+    background-color: #e6f7ff;
+    margin: 5px;
+}
+
+.tripCity {
+    display: flex;
+    flex-direction: column;
+    min-width: var(--width-size);
+    border-radius: 3px;
+    box-shadow: 0 0 1px 1px rgba(156, 156, 156, 0.1);
+}
+
+.tripDescription {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 10px;
+    height: 100%;
+    font-size: 0.8rem;
+    padding: 5px;
+    max-width: 150px;
+}
+
+.fromTo {
+    color: #9c9c9c;
+}
+
+.cityImage {
+    width: 100%;
+    min-height: var(--width-size);
+    background-color: yellow;
+}
+
+.selected {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: var(--width-size);
+    border-radius: 3px;
+    box-shadow: 0 0 5px 2px rgba(35, 10, 179, 0.1);
+    & .cross {
+        position: absolute;
+        top: -10px;
+        right: -5px;
+        padding: 5px;
+        color: red;
+        background-color: white;
+        border-radius: 50%;
+        cursor: pointer;
+    }
+}
