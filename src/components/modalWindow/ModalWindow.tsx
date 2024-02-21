@@ -1,12 +1,13 @@
 import { useState } from "react";
 import styles from "./ModalWindow.module.css";
 import data from "../../state/dataState";
+import { observer } from "mobx-react-lite";
 
 interface Ifc {
     closeModal: () => void;
 }
 
-const ModalWindow: React.FC<Ifc> = ({ closeModal }) => {
+const ModalWindow: React.FC<Ifc> = observer(({ closeModal }) => {
     const [location, setLocation] = useState<string>("");
     const [date_1, setDate_1] = useState<string  | null>(null);
     const [date_2, setDate_2] = useState<string | null>(null);
@@ -23,7 +24,7 @@ const ModalWindow: React.FC<Ifc> = ({ closeModal }) => {
                 <span onClick={() => closeModal()}>✖</span>
             </div>
             <hr />
-            <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
+            <div className={styles.form}>
                 <label htmlFor="city">
                     <p>
                         <span>*</span> City
@@ -37,6 +38,7 @@ const ModalWindow: React.FC<Ifc> = ({ closeModal }) => {
                         }
                     />
                 </label>
+                {data.findCountryError && <div className={styles.error}>Some error!!! Tty another city!!!</div>}
                 <label htmlFor="endDate">
                     <p>
                         <span>*</span> Start date
@@ -64,7 +66,7 @@ const ModalWindow: React.FC<Ifc> = ({ closeModal }) => {
                         onChange={(e) => setDate_2(e.target.value)}
                     />
                 </label>
-            </form>
+            </div>
             <hr />
             <div className={styles.buttons}>
                 <button onClick={() => closeModal()}>Cancel</button>
@@ -72,6 +74,6 @@ const ModalWindow: React.FC<Ifc> = ({ closeModal }) => {
             </div>
         </div>
     );
-};
+});
 
 export default ModalWindow;

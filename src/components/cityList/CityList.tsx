@@ -1,16 +1,13 @@
 import styles from "./CityList.module.css";
 import data from "../../state/dataState";
 import { observer } from "mobx-react-lite";
-// import { useState } from "react";
+import myDataType from "../../types/dataType";
 
 interface Imodal {
     openModal: () => void;
 }
 
 const CityList: React.FC<Imodal> = observer(({ openModal }) => {
-    // const [myTripList, setMyTripList] = useState(data.tripsList);
-    const myTripList = data.tripsList
-
     return (
         <>
             <div className={styles.searchBlock}>
@@ -21,19 +18,24 @@ const CityList: React.FC<Imodal> = observer(({ openModal }) => {
                     placeholder="Search your trip"
                 />
                 <div className={styles.search}>
-                    <span>Sort: </span>
-                    <select name="search">
-                        <option>choose the option</option>
-                        <option value="name">by name</option>
-                        <option value="start">by start date</option>
-                        <option value="end">by end date</option>
+                    <span>Sort by: </span>
+                    <select
+                        name="search"
+                        onChange={(e) => data.sortBy(e.target.value)}
+                        defaultValue={'choose the option'}
+                    >
+                        <option disabled hidden>
+                            choose the option
+                        </option>
+                        <option value="start">start date</option>
+                        <option value="end">end date</option>
                     </select>
                 </div>
             </div>
             <div className={styles.cityList}>
                 <div className={styles.innerCityList}>
-                    {!!myTripList.length &&
-                        myTripList.map((i: any, index: number) => {
+                    {!!data.tripsList.length &&
+                        data.tripsList.map((i: myDataType, index: number) => {
                             return (
                                 <div
                                     className={
@@ -64,7 +66,7 @@ const CityList: React.FC<Imodal> = observer(({ openModal }) => {
                                         </div>
                                     </div>
                                     {index === data.selected &&
-                                        myTripList.length > 1 && (
+                                        data.tripsList.length > 1 && (
                                             <div
                                                 onClick={(e) => {
                                                     e.stopPropagation();
@@ -85,6 +87,9 @@ const CityList: React.FC<Imodal> = observer(({ openModal }) => {
                                 </div>
                             );
                         })}
+                    {data.isLoading && (
+                        <div className={styles.loadingBlock}>Loading...</div>
+                    )}
                 </div>
                 <div className={styles.addSity} onClick={() => openModal()}>
                     <p>+</p>

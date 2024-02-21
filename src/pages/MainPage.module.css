@@ -1,4 +1,5 @@
 .container {
+    position: relative;
     display: flex;
     max-width: 1600px;
     height: 100dvh;
@@ -15,6 +16,20 @@
     & p {
         font-size: 1.4rem;
     }
+}
+
+.login {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 4rem;
+    top: 1rem;
+    right: 2rem;
+    width: 4rem;
+    height: 4rem;
+    background-color: #35cfda;
+    clip-path: circle(50%);
 }
 
 

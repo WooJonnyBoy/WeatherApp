@@ -1,0 +1,31 @@
+.authWindow {
+    position: absolute;
+    z-index: 1000;
+    max-width: 300px;
+    width: 50%;
+    height: fit-content;
+    top: 1rem;
+    right: 7rem;
+    /* transform: translate(-50%, -50%); */
+    background-color: #fff;
+    border-radius: 3px;
+    box-shadow: 0 0 30px 2px rgba(110, 110, 110, 0.459);
+    & div {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem;
+        align-items: center;
+        & input,
+        button {
+            position: relative;
+            width: 100%;
+            margin: 5px 0;
+            padding: 5px;
+            font-size: 1.2rem;
+            outline: none;
+            border-radius: 2px;
+            border: 1px solid rgba(180, 180, 180, 0.61);
+        }
+    }
+}

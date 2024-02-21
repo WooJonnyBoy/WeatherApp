@@ -5,7 +5,7 @@ class Data {
     url: string = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/`;
     key: string = `47C8GRHUKPPXDP6ZDUQ2L69DT`;
     key_2: string = `CQE4354GF2AFQ55B8ABDW5N3G`;
-    dalleKey = "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";
+    dalleKey = "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";
     dateNow: string = new Date().toISOString().slice(0, 10);
     dateMax: string = new Date(new Date().setDate(new Date().getDate() + 15))
         .toISOString()
@@ -14,10 +14,16 @@ class Data {
     tripsList: Array<myDataType> | [] = [];
     selected: number = 0;
     findCountryError: boolean = false;
-    isLoading = false
+    isLoading = false;
 
     constructor() {
         makeAutoObservable(this);
+    }
+
+    async fetchData(url: string, options: any = {}) {
+        const response = await fetch(url, options);
+        const data = response.json();
+        return data;
     }
 
     async addTrip(
@@ -26,64 +32,54 @@ class Data {
         date_2: string | null
     ) {
         this.findCountryError = false;
-        this.isLoading = true
-        let myData: myDataType | {} = {};
-        let dateFrom = date_1 || this.dateNow;
-        let dateTo = date_2 || this.dateMax;
+        this.isLoading = true;
+        const dateFrom = date_1 || this.dateNow;
+        const dateTo = date_2 || this.dateMax;
 
         try {
-            await fetch(
+            const dataFromTo: myDataType = await this.fetchData(
                 `${this.url}${location}/${dateFrom}/${dateTo}?key=${this.key_2}&include=current`
-            )
-                .then((res) => res.json())
-                .then((data: myDataType) =>
-                    runInAction(() => {
-                        data.id = this.idCount;
-                        data.from = date_1 || this.dateNow;
-                        data.to = date_2 || this.dateMax;
-                        myData = data;
-                        this.idCount++;
-                    })
-                )
-                .catch((e) => console.log(e + "error111111"));
+            );
 
-            await fetch(
+            const dataCurrent = await this.fetchData(
                 `${this.url}${location}/${this.dateNow}?&include=days&key=${this.key_2}`
-            )
-                .then((res) => res.json())
-                .then((data: myDataType) =>
-                    runInAction(() => {
-                        myData.currentConditions =
-                            data.currentConditions || data.days[0];
-                        console.log(myData);
-                    })
-                )
-                .catch((e) => console.log(e + "error2222222"));
-            await fetch(`https://api.openai.com/v1/images/generations`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization:
-                        "Bearer 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",
-                },
-                body: JSON.stringify({
-                    model: "dall-e-2",
-                    prompt: `${myData.resolvedAddress}, ${myData.from}, face of the city, main attraction`,
-                    n: 1,
-                    size: "256x256",
-                }),
-            })
-                .then((res) => res.json())
-                .then((data) => {
-                    runInAction(() => (myData.image = data.data[0].url));
-                });
-            runInAction(() => this.tripsList.push(myData));
-            this.isLoading = false
-            console.log(myData)
+            );
+
+            // const dataImage = await this.fetchData(
+            //     `https://api.openai.com/v1/images/generations`,
+            //     {
+            //         method: "POST",
+            //         headers: {
+            //             "Content-Type": "application/json",
+            //             Authorization: `Bearer ${this.dalleKey}`,
+            //         },
+            //         body: JSON.stringify({
+            //             model: "dall-e-2",
+            //             prompt: `${dataFromTo.resolvedAddress}, ${dataFromTo.address} , ${dataFromTo.from} , face of the city, main attraction`,
+            //             n: 1,
+            //             size: "256x256",
+            //         }),
+            //     }
+            // );
+
+            runInAction(() => {
+                dataFromTo.currentConditions =
+                    dataCurrent.currentConditions || dataCurrent.days[0];
+                dataFromTo.id = this.idCount;
+                dataFromTo.from = dateFrom;
+                dataFromTo.to = dateTo;
+                // dataFromTo.image = dataImage.data[0].url;
+                this.idCount++;
+                this.tripsList = [...this.tripsList, dataFromTo];
+                this.isLoading = false;
+                console.log(dataFromTo);
+            });
         } catch (error) {
-            this.isLoading = false
-            this.findCountryError = true;
-            console.log(error + "fetch error");
+            runInAction(() => {
+                this.isLoading = false;
+                this.findCountryError = true;
+                console.log(error + "fetch error");
+            });
         }
     }
 
@@ -100,6 +96,17 @@ class Data {
         if (this.selected < this.tripsList.length - 1 && ident === "next")
             this.selected += 1;
     }
+
+    sortBy = (id: string) => {
+        if (id === "start")
+            this.tripsList = this.tripsList.sort(
+                (a, b) => Date.parse(a.from) - Date.parse(b.from)
+            );
+        if (id === "end")
+            this.tripsList = this.tripsList.sort(
+                (a, b) => Date.parse(a.to) - Date.parse(b.to)
+            );
+    };
 }
 
 export default new Data();

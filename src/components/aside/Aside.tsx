@@ -30,7 +30,7 @@ const Aside: React.FC = observer(() => {
           {weatherIcons[data.tripsList[data.selected]?.currentConditions?.icon]}
         </span>
         <span className={styles.temp}>
-          {(((data.tripsList[data.selected]?.currentConditions?.temp - 32) * 5) / 9).toFixed()}
+          {data.tripsList[data.selected] && (((data.tripsList[data.selected]?.currentConditions?.temp - 32) * 5) / 9).toFixed()}
           <span>&#8451;</span>
         </span>
       </div>
