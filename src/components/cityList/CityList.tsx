@@ -2,12 +2,15 @@ import styles from "./CityList.module.css";
 import data from "../../state/dataState";
 import { observer } from "mobx-react-lite";
 import myDataType from "../../types/dataType";
+import { useState } from "react";
 
 interface Imodal {
     openModal: () => void;
 }
 
 const CityList: React.FC<Imodal> = observer(({ openModal }) => {
+    const [search, setSearch] = useState<string>('')
+
     return (
         <>
             <div className={styles.searchBlock}>
@@ -16,6 +19,8 @@ const CityList: React.FC<Imodal> = observer(({ openModal }) => {
                     className={styles.searchInput}
                     type="text"
                     placeholder="Search your trip"
+                    onInput={(e: React.ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)}
+
                 />
                 <div className={styles.search}>
                     <span>Sort by: </span>
@@ -35,7 +40,11 @@ const CityList: React.FC<Imodal> = observer(({ openModal }) => {
             <div className={styles.cityList}>
                 <div className={styles.innerCityList}>
                     {!!data.tripsList.length &&
-                        data.tripsList.map((i: myDataType, index: number) => {
+                        data.tripsList
+                        .filter(i => {
+                            return search.length ? i.address.includes(search) : i
+                        })
+                        .map((i: myDataType, index: number) => {
                             return (
                                 <div
                                     className={

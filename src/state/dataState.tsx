@@ -7,13 +7,11 @@ class Data {
     key_2: string = `CQE4354GF2AFQ55B8ABDW5N3G`;
     dalleKey = "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";
     dateNow: string = new Date().toISOString().slice(0, 10);
-    dateMax: string = new Date(new Date().setDate(new Date().getDate() + 15))
-        .toISOString()
-        .slice(0, 10);
+    dateMax: string = new Date(new Date().setDate(new Date().getDate() + 15)).toISOString().slice(0, 10);
     idCount: number = 0;
     tripsList: Array<myDataType> | [] = [];
     selected: number = 0;
-    findCountryError: boolean = false;
+    fetchError: boolean = false;
     isLoading = false;
 
     constructor() {
@@ -31,7 +29,7 @@ class Data {
         date_1: string | null,
         date_2: string | null
     ) {
-        this.findCountryError = false;
+        this.fetchError = false;
         this.isLoading = true;
         const dateFrom = date_1 || this.dateNow;
         const dateTo = date_2 || this.dateMax;
@@ -63,8 +61,7 @@ class Data {
             // );
 
             runInAction(() => {
-                dataFromTo.currentConditions =
-                    dataCurrent.currentConditions || dataCurrent.days[0];
+                dataFromTo.currentConditions = dataCurrent.currentConditions || dataCurrent.days[0];
                 dataFromTo.id = this.idCount;
                 dataFromTo.from = dateFrom;
                 dataFromTo.to = dateTo;
@@ -77,7 +74,7 @@ class Data {
         } catch (error) {
             runInAction(() => {
                 this.isLoading = false;
-                this.findCountryError = true;
+                this.fetchError = true;
                 console.log(error + "fetch error");
             });
         }
@@ -93,16 +90,15 @@ class Data {
 
     changeSelectIndex(ident: string) {
         if (this.selected && ident === "prev") this.selected -= 1;
-        if (this.selected < this.tripsList.length - 1 && ident === "next")
-            this.selected += 1;
+        if (this.selected < this.tripsList.length - 1 && ident === "next") this.selected += 1;
     }
 
-    sortBy = (id: string) => {
-        if (id === "start")
+    sortBy = (value: string) => {
+        if (value === "start")
             this.tripsList = this.tripsList.sort(
                 (a, b) => Date.parse(a.from) - Date.parse(b.from)
             );
-        if (id === "end")
+        if (value === "end")
             this.tripsList = this.tripsList.sort(
                 (a, b) => Date.parse(a.to) - Date.parse(b.to)
             );

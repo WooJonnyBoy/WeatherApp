@@ -38,7 +38,7 @@ const ModalWindow: React.FC<Ifc> = observer(({ closeModal }) => {
                         }
                     />
                 </label>
-                {data.findCountryError && <div className={styles.error}>Some error!!! Tty another city!!!</div>}
+                {data.fetchError && <div className={styles.error}>Some error!!! Tty another city!!!</div>}
                 <label htmlFor="endDate">
                     <p>
                         <span>*</span> Start date
