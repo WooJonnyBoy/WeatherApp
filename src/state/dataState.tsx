@@ -5,7 +5,7 @@ class Data {
     url: string = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/`;
     key: string = `47C8GRHUKPPXDP6ZDUQ2L69DT`;
     key_2: string = `CQE4354GF2AFQ55B8ABDW5N3G`;
-    dalleKey = "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";
+    dalleKey = "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";
     dateNow: string = new Date().toISOString().slice(0, 10);
     dateMax: string = new Date(new Date().setDate(new Date().getDate() + 15)).toISOString().slice(0, 10);
     idCount: number = 0;

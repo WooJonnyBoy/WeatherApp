@@ -3,14 +3,29 @@ import data from "../../state/dataState";
 import myDataType from "../../types/dataType";
 import CityCart from "../../components/CityCart/CityCart";
 import { observer } from "mobx-react-lite";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 interface Imodal {
     openModal: () => void;
 }
 
 const CityList: React.FC<Imodal> = observer(({ openModal }) => {
-    const [search, setSearch] = useState<string>('')
+    const [search, setSearch] = useState<string>("");
+    const block = useRef<HTMLDivElement>(null);
+
+    const nextButtonHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+        data.changeSelectIndex(e.currentTarget.name);
+        if(block.current) {
+            block.current.scrollLeft = data.selected * 200
+        }
+    };
+
+    const previousButtonHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+            data.changeSelectIndex(e.currentTarget.name);
+            if(block.current) {
+                block.current.scrollLeft = data.selected * 220
+            }
+    }
 
     return (
         <>
@@ -20,15 +35,16 @@ const CityList: React.FC<Imodal> = observer(({ openModal }) => {
                     className={styles.searchInput}
                     type="text"
                     placeholder="Search your trip"
-                    onInput={(e: React.ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)}
-
+                    onInput={(e: React.ChangeEvent<HTMLInputElement>) =>
+                        setSearch(e.target.value)
+                    }
                 />
                 <div className={styles.search}>
                     <span>Sort by: </span>
                     <select
                         name="search"
                         onChange={(e) => data.sortBy(e.target.value)}
-                        defaultValue={'choose the option'}
+                        defaultValue={"choose the option"}
                     >
                         <option disabled hidden>
                             choose the option
@@ -39,17 +55,19 @@ const CityList: React.FC<Imodal> = observer(({ openModal }) => {
                 </div>
             </div>
             <div className={styles.cityList}>
-                <div className={styles.innerCityList}>
+                <div className={styles.innerCityList} ref={block}>
                     {!!data.tripsList.length &&
                         data.tripsList
-                        .filter(i => {
-                            return search.length ? i.address.toLowerCase().includes(search.toLowerCase()) : i
-                        })
-                        .map((i: myDataType, index: number) => {
-                            return (
-                                <CityCart myData={i} index={index}/>
-                            );
-                        })}
+                            .filter((i) => {
+                                return search.length
+                                    ? i.address
+                                          .toLowerCase()
+                                          .includes(search.toLowerCase())
+                                    : i;
+                            })
+                            .map((i: myDataType, index: number) => {
+                                return <CityCart myData={i} index={index} />;
+                            })}
                     {data.isLoading && (
                         <div className={styles.loadingBlock}>Loading...</div>
                     )}
@@ -63,16 +81,14 @@ const CityList: React.FC<Imodal> = observer(({ openModal }) => {
                 <button
                     name="prev"
                     disabled={!data.selected}
-                    onClick={(e: any) => {
-                        data.changeSelectIndex(e.target.name);
-                    }}
+                    onClick={previousButtonHandler}
                 >
                     {"<< previous"}
                 </button>
                 <button
                     name="next"
                     disabled={data.selected === data.tripsList.length - 1}
-                    onClick={(e: any) => data.changeSelectIndex(e.target.name)}
+                    onClick={nextButtonHandler}
                 >
                     {"next >>"}
                 </button>

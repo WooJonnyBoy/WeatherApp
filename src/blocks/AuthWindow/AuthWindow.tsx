@@ -22,7 +22,7 @@ const AuthWindow: React.FC<IcloseAuth> = ({ closeAuth }) => {
         <div className={styles.authWindow}>
             <div>
                 <p>Log in</p>
-                <input type="text" placeholder="Login" onInput={(e: React.ChangeEvent<HTMLInputElement>) => setUserName(e.target.value)} value={userName}/>
+                <input type="text" placeholder="User name" onInput={(e: React.ChangeEvent<HTMLInputElement>) => setUserName(e.target.value)} value={userName}/>
                 <input type="text" placeholder="Password" onInput={(e: React.ChangeEvent<HTMLInputElement>) => setUserPassword(e.target.value)} value={userPassword}/>
                 <button onClick={login}>Long In</button>
                 <button onClick={() => closeAuth()}>Cancel</button>
