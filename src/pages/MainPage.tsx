@@ -1,12 +1,13 @@
-import ModalWindow from "../components/modalWindow/ModalWindow";
+import ModalWindow from "../blocks/modalWindow/ModalWindow";
 import styles from "./MainPage.module.css";
 import { useCallback, useEffect, useState } from "react";
 import data from "../state/dataState";
 import { observer } from "mobx-react-lite";
-import Aside from "../components/aside/Aside";
-import WeatherList from "../components/weatherList/WeatherList";
-import CityList from "../components/cityList/CityList";
-import AuthWindow from "../components/AuthWindow/AuthWindow";
+import Aside from "../blocks/aside/Aside";
+import WeatherList from "../blocks/weatherList/WeatherList";
+import CityList from "../blocks/cityList/CityList";
+import AuthWindow from "../blocks/AuthWindow/AuthWindow";
+import user from "../state/userState";
 
 const MainPage: React.FC = observer(() => {
     const [modal, setModal] = useState(false);
@@ -38,12 +39,29 @@ const MainPage: React.FC = observer(() => {
         <div className={styles.container}>
             {modal && <ModalWindow closeModal={closeModal} />}
             {authOpen && <AuthWindow closeAuth={closeAuth} />}
-            <div
-                className={styles.login}
-                onClick={() => setAuthOpen((prev) => !prev)}
-            >
-                &#128039;
-            </div>
+            {!user.isAuth && (
+                <div
+                    className={styles.login}
+                    onClick={() => setAuthOpen((prev) => !prev)}
+                >
+                    &#128039;
+                </div>
+            )}
+            {user.isAuth && (
+                <div className={styles.isAuth}>
+                    <div className={styles.innerAuth}>
+                        <div className={styles.userName}>
+                            {user.userName.toUpperCase()}
+                        </div>
+                        <div className={styles.userAvatar}>
+                            {user.userName[0].toUpperCase()}
+                        </div>
+                    </div>
+                    <div className={styles.logout} onClick={() => user.logout()}>
+                        Logout<div></div>
+                    </div>
+                </div>
+            )}
             <main className={styles.mainSection}>
                 <div>
                     <p>
