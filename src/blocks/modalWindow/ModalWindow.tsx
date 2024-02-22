@@ -9,7 +9,7 @@ interface Ifc {
 
 const ModalWindow: React.FC<Ifc> = observer(({ closeModal }) => {
     const [location, setLocation] = useState<string>("");
-    const [date_1, setDate_1] = useState<string  | null>(null);
+    const [date_1, setDate_1] = useState<string | null>(null);
     const [date_2, setDate_2] = useState<string | null>(null);
 
     const addTrip = () => {
@@ -38,14 +38,21 @@ const ModalWindow: React.FC<Ifc> = observer(({ closeModal }) => {
                         }
                     />
                 </label>
-                {data.fetchError && <div className={styles.error}>Some error!!! Tty another city!!!</div>}
-                <label htmlFor="endDate">
+                {data.fetchError && (
+                    <div className={styles.error}>
+                        Some error!!! Tty another city!!!
+                    </div>
+                )}
+                <label htmlFor="startDate">
                     <p>
                         <span>*</span> Start date
                     </p>
                     <input
-                        className={styles.input}
-                        type='date'
+                        id="startDate"
+                        className={
+                            date_1 ? styles.input : styles.inputPlaceholder
+                        }
+                        type="date"
                         placeholder={"Select date"}
                         max={data.dateMax}
                         min={data.dateNow}
@@ -57,9 +64,11 @@ const ModalWindow: React.FC<Ifc> = observer(({ closeModal }) => {
                         <span>*</span> End date
                     </p>
                     <input
-                        className={styles.input}
+                        className={
+                            date_2 ? styles.input : styles.inputPlaceholder
+                        }
                         id="inp_2"
-                        type='date'
+                        type="date"
                         placeholder="Select date"
                         max={data.dateMax}
                         min={data.dateNow}

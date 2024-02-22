@@ -8,7 +8,7 @@ class Data {
     dalleKey = "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";
     dateNow: string = new Date().toISOString().slice(0, 10);
     dateMax: string = new Date(new Date().setDate(new Date().getDate() + 15)).toISOString().slice(0, 10);
-    idCount: number = 0;
+    idCounter: number = 0;
     tripsList: Array<myDataType> | [] = [];
     selected: number = 0;
     fetchError: boolean = false;
@@ -39,7 +39,7 @@ class Data {
                 `${this.url}${location}/${dateFrom}/${dateTo}?key=${this.key_2}&include=current`
             );
 
-            const dataCurrent = await this.fetchData(
+            const dataCurrent: myDataType = await this.fetchData(
                 `${this.url}${location}/${this.dateNow}?&include=days&key=${this.key_2}`
             );
 
@@ -62,11 +62,11 @@ class Data {
 
             runInAction(() => {
                 dataFromTo.currentConditions = dataCurrent.currentConditions || dataCurrent.days[0];
-                dataFromTo.id = this.idCount;
+                dataFromTo.id = this.idCounter;
                 dataFromTo.from = dateFrom;
                 dataFromTo.to = dateTo;
                 // dataFromTo.image = dataImage.data[0].url;
-                this.idCount++;
+                this.idCounter++;
                 this.tripsList = [...this.tripsList, dataFromTo];
                 this.isLoading = false;
                 console.log(dataFromTo);
