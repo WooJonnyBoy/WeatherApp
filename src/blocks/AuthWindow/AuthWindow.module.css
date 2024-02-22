@@ -28,4 +28,8 @@
             border: 1px solid rgba(180, 180, 180, 0.61);
         }
     }
+    & .error {
+        background-color: rgb(243, 97, 97);
+        padding: 5px;
+    }
 }

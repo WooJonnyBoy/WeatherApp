@@ -15,7 +15,7 @@ const CityList: React.FC<Imodal> = observer(({ openModal }) => {
 
     const nextButtonHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
         data.changeSelectIndex(e.currentTarget.name);
-        if(block.current) {
+        if(block.current && data.selected > 2) {
             block.current.scrollLeft = data.selected * 200
         }
     };
@@ -23,7 +23,7 @@ const CityList: React.FC<Imodal> = observer(({ openModal }) => {
     const previousButtonHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
             data.changeSelectIndex(e.currentTarget.name);
             if(block.current) {
-                block.current.scrollLeft = data.selected * 220
+                block.current.scrollLeft = data.selected * 190
             }
     }
 
