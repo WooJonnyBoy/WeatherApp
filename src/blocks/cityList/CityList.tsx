@@ -27,6 +27,14 @@ const CityList: React.FC<Imodal> = observer(({ openModal }) => {
             }
     }
 
+    const scrollHandler = () => {
+        if(block.current) {
+            block.current.scrollLeft = data.tripsList.length * 250
+        }
+    }
+
+    data.scrollHandler(scrollHandler)
+
     return (
         <>
             <div className={styles.searchBlock}>

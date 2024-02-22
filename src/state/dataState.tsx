@@ -103,6 +103,13 @@ class Data {
                 (a, b) => Date.parse(a.to) - Date.parse(b.to)
             );
     };
+
+    scrollEnd = () => {}
+
+    scrollHandler(handler: () => void) {
+        this.scrollEnd = handler
+    }
+
 }
 
 export default new Data();

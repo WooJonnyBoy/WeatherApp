@@ -15,6 +15,10 @@ const ModalWindow: React.FC<Ifc> = observer(({ closeModal }) => {
     const addTrip = () => {
         if (!location.length) return;
         data.addTrip(location, date_1, date_2);
+        setTimeout(() => {
+            data.scrollEnd()
+            data.selected = data.tripsList.length
+        }, 100)
     };
 
     return (
@@ -30,6 +34,7 @@ const ModalWindow: React.FC<Ifc> = observer(({ closeModal }) => {
                         <span>*</span> City
                     </p>
                     <input
+                        placeholder="Select city"
                         className={styles.input}
                         autoFocus
                         type="text"
