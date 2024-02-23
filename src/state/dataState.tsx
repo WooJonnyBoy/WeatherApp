@@ -43,29 +43,14 @@ class Data {
                 `${this.url}${location}/${this.dateNow}?&include=days&key=${this.key_2}`
             );
 
-            // const dataImage = await this.fetchData(
-            //     `https://api.openai.com/v1/images/generations`,
-            //     {
-            //         method: "POST",
-            //         headers: {
-            //             "Content-Type": "application/json",
-            //             Authorization: `Bearer ${this.dalleKey}`,
-            //         },
-            //         body: JSON.stringify({
-            //             model: "dall-e-2",
-            //             prompt: `${dataFromTo.resolvedAddress}, ${dataFromTo.address} , ${dataFromTo.from} , face of the city, main attraction`,
-            //             n: 1,
-            //             size: "256x256",
-            //         }),
-            //     }
-            // );
+            const dataImage = await this.fetchData(`https://api.unsplash.com/search/photos?query=${dataFromTo.address}&per_page=1&client_id=fScOT1A41OtGdr4Fy4GIGQFyGhVV-ksI7m5imzBwplo`)
 
             runInAction(() => {
                 dataFromTo.currentConditions = dataCurrent.currentConditions || dataCurrent.days[0];
                 dataFromTo.id = this.idCounter;
                 dataFromTo.from = dateFrom;
                 dataFromTo.to = dateTo;
-                // dataFromTo.image = dataImage.data[0].url;
+                dataFromTo.image = dataImage.results[0].urls.small
                 this.idCounter++;
                 this.tripsList = [...this.tripsList, dataFromTo];
                 this.isLoading = false;
