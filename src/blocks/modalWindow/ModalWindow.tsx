@@ -16,10 +16,12 @@ const ModalWindow: React.FC<Ifc> = observer(({ closeModal }) => {
         if (!location.length) return;
         data.addTrip(location, date_1, date_2);
         setTimeout(() => {
-            data.scrollEnd()
-            data.selected = data.tripsList.length
-            closeModal()
-        }, 100)
+            data.scrollEnd();
+            data.selected = data.tripsList.length;
+        }, 100);
+        setTimeout(() => {
+            if (!data.fetchError) closeModal();
+        }, 1000);
     };
 
     return (
