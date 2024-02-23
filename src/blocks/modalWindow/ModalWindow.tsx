@@ -18,6 +18,7 @@ const ModalWindow: React.FC<Ifc> = observer(({ closeModal }) => {
         setTimeout(() => {
             data.scrollEnd()
             data.selected = data.tripsList.length
+            closeModal()
         }, 100)
     };
 
