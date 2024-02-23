@@ -21,7 +21,7 @@ const ModalWindow: React.FC<Ifc> = observer(({ closeModal }) => {
         }, 100);
         setTimeout(() => {
             if (!data.fetchError) closeModal();
-        }, 1000);
+        }, 500);
     };
 
     return (

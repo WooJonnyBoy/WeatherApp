@@ -23,7 +23,7 @@ const CityList: React.FC<Imodal> = observer(({ openModal }) => {
     const previousButtonHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
             data.changeSelectIndex(e.currentTarget.name);
             if(block.current) {
-                block.current.scrollLeft = data.selected * 200
+                block.current.scrollLeft = data.selected * 150
             }
     }
 
@@ -51,7 +51,7 @@ const CityList: React.FC<Imodal> = observer(({ openModal }) => {
                     <span>Sort by: </span>
                     <select
                         name="search"
-                        onChange={(e) => data.sortBy(e.target.value)}
+                        onChange={(e: React.ChangeEvent<HTMLSelectElement>) => data.sortBy(e.target.value)}
                         defaultValue={"choose the option"}
                     >
                         <option disabled hidden>

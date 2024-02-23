@@ -5,7 +5,7 @@ class Data {
     url: string = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/`;
     key: string = `47C8GRHUKPPXDP6ZDUQ2L69DT`;
     key_2: string = `CQE4354GF2AFQ55B8ABDW5N3G`;
-    dalleKey = "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";
+    unslpashKey = `fScOT1A41OtGdr4Fy4GIGQFyGhVV-ksI7m5imzBwplo`
     dateNow: string = new Date().toISOString().slice(0, 10);
     dateMax: string = new Date(new Date().setDate(new Date().getDate() + 15)).toISOString().slice(0, 10);
     idCounter: number = 0;
@@ -43,7 +43,7 @@ class Data {
                 `${this.url}${location}/${this.dateNow}?&include=days&key=${this.key_2}`
             );
 
-            const dataImage = await this.fetchData(`https://api.unsplash.com/search/photos?query=${dataFromTo.address}&per_page=1&client_id=fScOT1A41OtGdr4Fy4GIGQFyGhVV-ksI7m5imzBwplo`)
+            const dataImage = await this.fetchData(`https://api.unsplash.com/search/photos?query=${dataFromTo.address}&per_page=1&client_id=${this.unslpashKey}`)
 
             runInAction(() => {
                 dataFromTo.currentConditions = dataCurrent.currentConditions || dataCurrent.days[0];
@@ -70,7 +70,7 @@ class Data {
     }
 
     setSelectIndex(index: number) {
-        this.selected = index;
+            this.selected = index;
     }
 
     changeSelectIndex(ident: string) {
