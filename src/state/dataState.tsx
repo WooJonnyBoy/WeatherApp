@@ -18,8 +18,8 @@ class Data {
         makeAutoObservable(this);
     }
 
-    async fetchData(url: string, options: any = {}) {
-        const response = await fetch(url, options);
+    async fetchData(url: string) {
+        const response = await fetch(url);
         const data = response.json();
         return data;
     }
@@ -66,7 +66,7 @@ class Data {
     }
 
     removeTrip(id: number) {
-        this.tripsList = this.tripsList.filter((i: any) => i.id !== id);
+        this.tripsList = this.tripsList.filter((i: myDataType) => i.id !== id);
     }
 
     setSelectIndex(index: number) {
