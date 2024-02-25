@@ -61,10 +61,10 @@ const ModalWindow: React.FC<Ifc> = observer(({ closeModal }) => {
                             date_1 ? styles.input : styles.inputPlaceholder
                         }
                         type="date"
-                        placeholder={"Select date"}
                         max={data.dateMax}
                         min={data.dateNow}
                         onChange={(e) => setDate_1(e.target.value)}
+                        onClick={e => e.currentTarget.showPicker()}
                     />
                 </label>
                 <label htmlFor="endDate">
@@ -77,10 +77,10 @@ const ModalWindow: React.FC<Ifc> = observer(({ closeModal }) => {
                         }
                         id="inp_2"
                         type="date"
-                        placeholder="Select date"
                         max={data.dateMax}
                         min={data.dateNow}
                         onChange={(e) => setDate_2(e.target.value)}
+                        onClick={e => e.currentTarget.showPicker()}
                     />
                 </label>
             </div>
